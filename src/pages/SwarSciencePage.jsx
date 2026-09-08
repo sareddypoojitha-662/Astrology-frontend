@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Wind } from 'lucide-react';
 import { astroHeroContainer, astroHeroItem, swarBenefits, swarCards, swarFaqs, swarGuidance } from '../data/siteContent';
@@ -7,8 +7,14 @@ import { Breadcrumb } from '../components/shared/PageElements';
 export default function SwarSciencePage({ t }) {
   const [activeSwar, setActiveSwar] = useState('ida');
   const [breathing, setBreathing] = useState(false);
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
   const currentSwar = swarCards.find((item) => item.key === activeSwar) || swarCards[0];
   const currentGuidance = swarGuidance[activeSwar];
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setHeroVideoReady(true), 250);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   return (
     <main className="min-h-screen bg-white pb-20 pt-28 sm:pt-32">
@@ -16,8 +22,8 @@ export default function SwarSciencePage({ t }) {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
           <Breadcrumb currentPage={t('nav.swar')} homeLabel={t('breadcrumb.home')} />
           <section className="relative min-h-[420px] overflow-hidden rounded-[2.2rem] border border-[#d8e7e8] bg-[#dfeef3] shadow-[0_24px_80px_-45px_rgba(77,145,163,0.28)] sm:min-h-[500px] md:min-h-[560px]">
-            <video autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover opacity-95">
-              <source src="/Meditating_figure_forming_202604071413.mp4" type="video/mp4" />
+            <video autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 h-full w-full object-cover opacity-95">
+              {heroVideoReady ? <source src="/Meditating_figure_forming_202604071413.mp4" type="video/mp4" /> : null}
             </video>
             <div className="absolute inset-0 bg-black/20"></div>
             <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(198,226,234,0.18)_0%,rgba(214,235,240,0.08)_40%,rgba(247,222,184,0.16)_100%)]"></div>

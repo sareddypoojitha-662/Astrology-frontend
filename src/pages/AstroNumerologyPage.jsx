@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   astroCompatibility,
@@ -15,6 +15,12 @@ export default function AstroNumerologyPage({ t }) {
   const astroHeroVideo = '/astro-numerology-mandala.mp4?v=202604071454';
   const [form, setForm] = useState({ fullName: '', dob: '', gender: '', timeOfBirth: '', placeOfBirth: '' });
   const [showReport, setShowReport] = useState(false);
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setHeroVideoReady(true), 250);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const reduceToSingle = (value) => {
     let current = value;
@@ -47,8 +53,8 @@ export default function AstroNumerologyPage({ t }) {
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
           <Breadcrumb currentPage={t('astro.title')} homeLabel={t('breadcrumb.home')} />
           <section className="relative min-h-[420px] overflow-hidden rounded-[2.2rem] border border-[#dcc7a0] bg-[#10131a] shadow-[0_24px_80px_-45px_rgba(212,175,55,0.35)] sm:min-h-[500px] md:min-h-[560px]">
-            <video key={astroHeroVideo} autoPlay muted loop playsInline preload="auto" className="absolute inset-0 h-full w-full object-cover opacity-95">
-              <source src={astroHeroVideo} type="video/mp4" />
+            <video key={astroHeroVideo} autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 h-full w-full object-cover opacity-95">
+              {heroVideoReady ? <source src={astroHeroVideo} type="video/mp4" /> : null}
             </video>
             <div className="absolute inset-0 bg-black/28"></div>
             <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(17,20,29,0.22)_0%,rgba(28,23,17,0.1)_45%,rgba(255,153,51,0.08)_100%)]"></div>

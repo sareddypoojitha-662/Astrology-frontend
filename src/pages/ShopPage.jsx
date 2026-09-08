@@ -338,6 +338,9 @@ export default function ShopPage({ onNavigate, t }) {
                       src={item.image}
                       alt={item.name}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.nextSibling.style.display = 'flex';
@@ -697,7 +700,14 @@ export default function ShopPage({ onNavigate, t }) {
 
               <div className="overflow-y-auto p-6 sm:p-8">
                 <div className="relative mb-6 h-64 w-full overflow-hidden rounded-2xl bg-amber-50">
-                  <img src={selectedProduct.image} alt={selectedProduct.name} className="h-full w-full object-cover" />
+                  <img
+                    src={selectedProduct.image}
+                    alt={selectedProduct.name}
+                    className="h-full w-full object-cover"
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                  />
                   <span className="absolute left-4 top-4 rounded-full bg-saffron px-4 py-1.5 text-xs font-bold text-white shadow-md">
                     {selectedProduct.tag || 'Govt Certified'}
                   </span>

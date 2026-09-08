@@ -7,7 +7,11 @@
 
 import axios from 'axios';
 
-const API_ORIGIN = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/+$/, '') || '';
+// Support the documented variable and the legacy name so deployments cannot
+// silently switch from the configured backend to an unavailable same-origin API.
+const configuredApiOrigin =
+  import.meta.env.VITE_API_BASE_URL?.trim() || import.meta.env.VITE_API_URL?.trim() || '';
+const API_ORIGIN = configuredApiOrigin.replace(/\/+$/, '');
 const API_BASE = `${API_ORIGIN}/api`;
 
 export const apiClient = axios.create({

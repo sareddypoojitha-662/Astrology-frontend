@@ -13,7 +13,14 @@ export default function ArticlePage({ page, t }) {
           <Breadcrumb currentPage={article.crumb} homeLabel={t('breadcrumb.home')} />
           <div className="grid overflow-hidden rounded-[2rem] border border-[#efdfbf] bg-[#fff7ec] shadow-[0_20px_60px_-35px_rgba(212,175,55,0.45)] lg:grid-cols-[1fr_1.08fr]">
             <div className="h-[260px] overflow-hidden md:h-[360px]">
-              <AssetImage src={article.image} alt={article.title} className="h-full w-full object-cover" fallback={<div className="h-full w-full bg-[linear-gradient(90deg,rgba(245,158,11,0.92),rgba(251,191,36,0.82),rgba(99,102,241,0.7))]"></div>} />
+              <AssetImage
+                src={article.image}
+                alt={article.title}
+                className="h-full w-full object-cover"
+                loading="eager"
+                fetchPriority="high"
+                fallback={<div className="h-full w-full bg-[linear-gradient(90deg,rgba(245,158,11,0.92),rgba(251,191,36,0.82),rgba(99,102,241,0.7))]"></div>}
+              />
             </div>
             <div className="flex flex-col justify-center bg-[linear-gradient(180deg,#fff8ec_0%,#fff1d6_100%)] p-6 sm:p-7 md:p-8">
               <p className="text-xs md:text-sm font-semibold uppercase tracking-[0.28em] text-saffron mb-3">{t('shared.sacredInsight')}</p>

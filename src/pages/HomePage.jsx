@@ -8,6 +8,7 @@ export default function HomePage({ onNavigate, t }) {
   const [pandits, setPandits] = useState(() => loadPanditRegistrationsSync());
   const [selectedPandit, setSelectedPandit] = useState(null);
   const [consultingPandit, setConsultingPandit] = useState(null);
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -28,10 +29,13 @@ export default function HomePage({ onNavigate, t }) {
     window.addEventListener('storage', handleRefresh);
     window.addEventListener('vedaura-session-changed', handleRefresh);
 
+    const heroVideoTimer = window.setTimeout(() => setHeroVideoReady(true), 250);
+
     return () => {
       isMounted = false;
       window.removeEventListener('storage', handleRefresh);
       window.removeEventListener('vedaura-session-changed', handleRefresh);
+      window.clearTimeout(heroVideoTimer);
     };
   }, []);
 
@@ -56,8 +60,9 @@ export default function HomePage({ onNavigate, t }) {
     <>
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden pb-20 pt-28 sm:pt-32 lg:pb-32 lg:pt-48">
         <div className="absolute inset-0 overflow-hidden">
-          <video autoPlay muted loop playsInline className="w-full h-full object-cover absolute inset-0">
-            <source src="/Video Project 1.mp4" type="video/mp4" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(255,153,51,0.18),transparent_42%),linear-gradient(180deg,#110c08_0%,#050816_100%)]" />
+          <video autoPlay muted loop playsInline preload="metadata" className="absolute inset-0 h-full w-full object-cover">
+            {heroVideoReady ? <source src="/Video Project 1.mp4" type="video/mp4" /> : null}
           </video>
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
@@ -271,6 +276,9 @@ export default function HomePage({ onNavigate, t }) {
                     src={product.image}
                     alt={product.name}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                    fetchPriority="low"
                     onError={(e) => {
                       e.target.style.display = 'none';
                       e.target.nextSibling.style.display = 'flex';

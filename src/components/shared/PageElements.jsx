@@ -11,16 +11,49 @@ export function Breadcrumb({ currentPage, homeLabel = 'Home' }) {
   );
 }
 
-export function AssetImage({ src, alt, className, fallback }) {
+export function AssetImage({
+  src,
+  alt,
+  className,
+  fallback,
+  loading = 'lazy',
+  decoding = 'async',
+  fetchPriority = 'low',
+  ...rest
+}) {
   const [failed, setFailed] = useState(false);
   if (!src || failed) return fallback;
-  return <img src={src} alt={alt} className={className} onError={() => setFailed(true)} />;
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading={loading}
+      decoding={decoding}
+      fetchPriority={fetchPriority}
+      onError={() => setFailed(true)}
+      {...rest}
+    />
+  );
 }
 
-export function HeroAsset({ src, alt, fallback, className = '', imageClassName = 'h-full w-full object-cover' }) {
+export function HeroAsset({
+  src,
+  alt,
+  fallback,
+  className = '',
+  imageClassName = 'h-full w-full object-cover',
+}) {
   return (
     <div className={`relative min-h-[260px] overflow-hidden bg-white sm:min-h-[320px] ${className}`}>
-      <AssetImage src={src} alt={alt} className={imageClassName} fallback={fallback} />
+      <AssetImage
+        src={src}
+        alt={alt}
+        className={imageClassName}
+        fallback={fallback}
+        loading="eager"
+        fetchPriority="high"
+      />
     </div>
   );
 }

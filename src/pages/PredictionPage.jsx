@@ -69,7 +69,7 @@ export default function PredictionPage({ type, t }) {
         <Motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
           <Breadcrumb currentPage={type} homeLabel={t('breadcrumb.home')} />
           <div className="grid overflow-hidden rounded-[2rem] border border-[#efdfbf] bg-[#fff7ec] shadow-[0_20px_60px_-35px_rgba(212,175,55,0.45)] lg:grid-cols-[1fr_1.08fr]">
-            <div className="h-[220px] overflow-hidden md:h-[300px]"><AssetImage src={article.image} alt={article.title} className="h-full w-full object-cover" fallback={<div className="h-full w-full bg-[linear-gradient(90deg,rgba(245,158,11,0.92),rgba(251,191,36,0.82),rgba(99,102,241,0.7))]" />} /></div>
+            <div className="h-[220px] overflow-hidden md:h-[300px]"><AssetImage src={article.image} alt={article.title} className="h-full w-full object-cover" loading="eager" fetchPriority="high" fallback={<div className="h-full w-full bg-[linear-gradient(90deg,rgba(245,158,11,0.92),rgba(251,191,36,0.82),rgba(99,102,241,0.7))]" />} /></div>
             <div className="flex flex-col justify-center bg-[linear-gradient(180deg,#fff8ec_0%,#fff1d6_100%)] p-7 sm:p-10">
             <div className="flex items-start gap-4">
               <span className="rounded-2xl bg-[#ffc400] p-3 text-black"><Heart className="h-7 w-7 fill-current" /></span>
